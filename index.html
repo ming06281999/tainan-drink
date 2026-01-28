@@ -34,9 +34,18 @@
             border-radius: 40px;
             padding: 40px 20px;
             width: 90%;
-            max-width: 450px;
+            /* 調整這裡：讓它在大螢幕上可以寬到 600px */
+            max-width: 600px; 
             text-align: center;
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        /* 增加這段：當螢幕寬度超過 800px (電腦) 時，字體跟寬度再加大 */
+        @media (min-width: 800px) {
+            h1 { font-size: 3rem; }
+            #display-text { font-size: 2.5rem; }
+            .display-box { height: 180px; }
+            .main-btn { font-size: 1.5rem; padding: 25px 70px; }
         }
 
         h1 {
@@ -217,3 +226,4 @@
     </script>
 </body>
 </html>
+
