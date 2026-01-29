@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🥳 府城手搖抽抽樂🥤</title>
+    <title>府城飲品時光 🥤</title>
     <style>
         * { box-sizing: border-box; }
         
         body {
             margin: 0; padding: 0;
             font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            /* 1. 流動漸層背景 */
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
@@ -28,23 +27,8 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* --- 2. 飄動珍珠背景 --- */
-        .boba-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0; left: 0;
-            z-index: 1;
-        }
-
-        .boba {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.15); /* 珍珠的顏色 */
-            border-radius: 50%;
-            bottom: -50px;
-            animation: floatUp 10s infinite ease-in;
-        }
-
+        .boba-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; }
+        .boba { position: absolute; background: rgba(0, 0, 0, 0.15); border-radius: 50%; bottom: -50px; animation: floatUp 10s infinite ease-in; }
         @keyframes floatUp {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
             20% { opacity: 0.6; }
@@ -65,7 +49,6 @@
             max-width: 500px;
             text-align: center;
             box-shadow: 0 25px 45px rgba(0,0,0,0.1);
-            transition: all 0.5s ease;
         }
 
         @media (min-width: 800px) {
@@ -75,95 +58,55 @@
             .display-box { height: 220px !important; }
         }
 
-        h1 {
-            color: white;
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            letter-spacing: 5px;
-        }
-
-        .display-box {
-            background: rgba(255, 255, 255, 0.3);
-            height: 140px;
-            border-radius: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 40px;
-            border: 2px solid white;
-            box-shadow: inset 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        #display-text {
-            font-size: 2.2rem;
-            font-weight: 900;
-            color: #ffffff;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-        }
+        h1 { color: white; font-size: 2.2rem; margin-bottom: 30px; text-shadow: 0 4px 15px rgba(0,0,0,0.2); letter-spacing: 5px; }
+        .display-box { background: rgba(255, 255, 255, 0.3); height: 140px; border-radius: 35px; display: flex; align-items: center; justify-content: center; margin-bottom: 40px; border: 2px solid white; }
+        #display-text { font-size: 2.2rem; font-weight: 900; color: #ffffff; text-shadow: 2px 2px 10px rgba(0,0,0,0.2); }
 
         .main-btn {
-            background: #ffffff;
-            color: #ff6b6b;
-            border: none;
-            padding: 20px 60px;
-            font-size: 1.5rem;
-            font-weight: 900;
-            border-radius: 100px;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: 0.3s;
-            text-transform: uppercase;
+            background: #ffffff; color: #ff6b6b; border: none; padding: 20px 60px; font-size: 1.5rem; font-weight: 900; border-radius: 100px; cursor: pointer; transition: 0.3s;
         }
+        .main-btn:hover { transform: translateY(-8px) scale(1.05); background: #ff6b6b; color: white; }
 
-        .main-btn:hover {
-            transform: translateY(-8px) scale(1.05);
-            background: #ff6b6b;
-            color: white;
-        }
-
-        /* --- 結果彈窗 --- */
+        /* --- 結果彈窗加大優化 --- */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(15px);
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(15px);
         }
 
         .modal-content {
             background: white;
-            width: 90%;
-            max-width: 450px;
+            width: 95%; /* 彈窗佔螢幕寬度 */
+            max-width: 850px; /* 電腦版最大寬度顯著增加 */
             border-radius: 40px;
-            padding: 30px;
+            padding: 25px;
             text-align: center;
             transform: scale(0.7);
             opacity: 0;
             transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .modal.active .modal-content { transform: scale(1); opacity: 1; }
 
         .menu-img { 
             width: 100%; 
-            max-height: 50vh; 
+            max-height: 55vh; /* 手機版高度限制 */
             object-fit: contain; 
             border-radius: 20px; 
-            margin: 20px 0;
+            margin: 15px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
-        .close-btn {
-            background: #f0f0f0;
-            padding: 12px 35px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            border: none;
+        /* 電腦版圖片加大 */
+        @media (min-width: 800px) {
+            .modal-content { padding: 40px; }
+            .menu-img { max-height: 75vh; } /* 電腦版讓圖片可以更高更清楚 */
+            #res-name { font-size: 2.5rem !important; }
         }
+
+        .close-btn { background: #f0f0f0; padding: 12px 45px; border-radius: 50px; cursor: pointer; font-weight: bold; border: none; font-size: 1.1rem; }
     </style>
 </head>
 <body>
@@ -171,18 +114,17 @@
     <div class="boba-container" id="boba-bg"></div>
 
     <div class="glass-card">
-        <h1>🥳 府城手搖抽抽樂🥤</h1>
+        <h1>🍹 府城飲品時光</h1>
         <div class="display-box">
             <div id="display-text">LUCKY DRAW</div>
         </div>
-        <button class="main-btn" onclick="luckyDraw()">搖出台南好滋味</button>
+        <button class="main-btn" onclick="luckyDraw()">開始抽取</button>
     </div>
 
     <div class="modal" id="modal">
         <div class="modal-content">
-            <h2 id="res-name" style="margin: 0; color: #ff6b6b;">店名</h2>
+            <h2 id="res-name" style="margin: 0; color: #ff6b6b; font-size: 1.8rem;">店名</h2>
             <img id="res-img" class="menu-img" src="" alt="菜單讀取中...">
-            <br>
             <button class="close-btn" onclick="closeModal()">關閉</button>
         </div>
     </div>
@@ -190,15 +132,15 @@
     <script>
         // 生成背景珍珠
         const bobaBg = document.getElementById('boba-bg');
-        for (let i = 0; i < 15; i++) {
+        for (let i = 0; i < 18; i++) {
             const boba = document.createElement('div');
             boba.className = 'boba';
-            const size = Math.random() * 40 + 10 + 'px';
+            const size = Math.random() * 40 + 15 + 'px';
             boba.style.width = size;
             boba.style.height = size;
             boba.style.left = Math.random() * 100 + '%';
-            boba.style.animationDelay = Math.random() * 10 + 's';
-            boba.style.animationDuration = Math.random() * 5 + 7 + 's';
+            boba.style.animationDelay = Math.random() * 8 + 's';
+            boba.style.animationDuration = Math.random() * 5 + 6 + 's';
             bobaBg.appendChild(boba);
         }
 
@@ -228,6 +170,7 @@
         function luckyDraw() {
             const text = document.getElementById('display-text');
             const btn = document.querySelector('.main-btn');
+            if(btn.disabled) return;
             btn.disabled = true;
             
             let i = 0;
@@ -240,12 +183,8 @@
                 clearInterval(interval);
                 const result = stores[Math.floor(Math.random() * stores.length)];
                 text.innerText = result.name;
-                
-                setTimeout(() => {
-                    showModal(result);
-                    btn.disabled = false;
-                }, 500);
-            }, 2000);
+                setTimeout(() => { showModal(result); btn.disabled = false; }, 500);
+            }, 1800);
         }
 
         function showModal(store) {
@@ -264,4 +203,3 @@
     </script>
 </body>
 </html>
-
