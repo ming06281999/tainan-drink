@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🥳 府城手搖抽抽樂 🥤</title>
+    <title>府城手搖抽抽樂 🥤</title>
     <style>
         * { box-sizing: border-box; }
         
@@ -27,12 +27,43 @@
             100% { background-position: 0% 50%; }
         }
 
-        .boba-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; }
-        .boba { position: absolute; background: rgba(0, 0, 0, 0.15); border-radius: 50%; bottom: -50px; animation: floatUp 10s infinite ease-in; }
+        /* --- 飄浮背景容器 --- */
+        .floating-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            z-index: 1;
+        }
+
+        /* 飄浮珍珠 */
+        .boba {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.15); /* 珍珠的顏色 */
+            border-radius: 50%;
+            bottom: -50px;
+            animation: floatUp 10s infinite ease-in;
+        }
+
+        /* 新增：飄浮可愛圖示 */
+        .cute-icon {
+            position: absolute;
+            font-size: 2.5em; /* 圖示大小 */
+            bottom: -50px;
+            opacity: 0.7;
+            animation: floatUpIcon 15s infinite ease-in;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+
         @keyframes floatUp {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            20% { opacity: 0.6; }
+            20% { opacity: 0.5; }
             100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes floatUpIcon {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-120vh) rotate(-360deg); opacity: 0; }
         }
 
         /* --- 主卡片設計 --- */
@@ -58,16 +89,54 @@
             .display-box { height: 220px !important; }
         }
 
-        h1 { color: white; font-size: 2.2rem; margin-bottom: 30px; text-shadow: 0 4px 15px rgba(0,0,0,0.2); letter-spacing: 5px; }
-        .display-box { background: rgba(255, 255, 255, 0.3); height: 140px; border-radius: 35px; display: flex; align-items: center; justify-content: center; margin-bottom: 40px; border: 2px solid white; }
-        #display-text { font-size: 2.2rem; font-weight: 900; color: #ffffff; text-shadow: 2px 2px 10px rgba(0,0,0,0.2); }
+        h1 {
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            letter-spacing: 5px;
+        }
+
+        .display-box {
+            background: rgba(255, 255, 255, 0.3);
+            height: 140px;
+            border-radius: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            border: 2px solid white;
+            box-shadow: inset 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        #display-text {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        }
 
         .main-btn {
-            background: #ffffff; color: #ff6b6b; border: none; padding: 20px 60px; font-size: 1.5rem; font-weight: 900; border-radius: 100px; cursor: pointer; transition: 0.3s;
+            background: #ffffff;
+            color: #ff6b6b;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            border-radius: 100px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            text-transform: uppercase;
         }
-        .main-btn:hover { transform: translateY(-8px) scale(1.05); background: #ff6b6b; color: white; }
 
-        /* --- 結果彈窗加大優化 --- */
+        .main-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* --- 結果彈窗 --- */
         .modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(15px);
@@ -75,8 +144,8 @@
 
         .modal-content {
             background: white;
-            width: 95%; /* 彈窗佔螢幕寬度 */
-            max-width: 850px; /* 電腦版最大寬度顯著增加 */
+            width: 95%;
+            max-width: 850px;
             border-radius: 40px;
             padding: 25px;
             text-align: center;
@@ -92,17 +161,16 @@
 
         .menu-img { 
             width: 100%; 
-            max-height: 55vh; /* 手機版高度限制 */
+            max-height: 55vh; 
             object-fit: contain; 
             border-radius: 20px; 
             margin: 15px 0;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
-        /* 電腦版圖片加大 */
         @media (min-width: 800px) {
             .modal-content { padding: 40px; }
-            .menu-img { max-height: 75vh; } /* 電腦版讓圖片可以更高更清楚 */
+            .menu-img { max-height: 75vh; }
             #res-name { font-size: 2.5rem !important; }
         }
 
@@ -111,15 +179,13 @@
 </head>
 <body>
 
-    <div class="boba-container" id="boba-bg"></div>
+    <div class="floating-container" id="floating-bg"></div>
 
     <div class="glass-card">
-        <h1>🥳 府城手搖抽抽樂 🥤</h1>
-        <div class="display-box">
+        <h1>🥳 府城手搖抽抽樂 🥤</h1> <div class="display-box">
             <div id="display-text">LUCKY DRAW</div>
         </div>
-        <button class="main-btn" onclick="luckyDraw()">搖出台南好滋味💕</button>
-    </div>
+        <button class="main-btn" onclick="luckyDraw()">搖出台南新滋味 💕</button> </div>
 
     <div class="modal" id="modal">
         <div class="modal-content">
@@ -130,18 +196,30 @@
     </div>
 
     <script>
-        // 生成背景珍珠
-        const bobaBg = document.getElementById('boba-bg');
-        for (let i = 0; i < 18; i++) {
-            const boba = document.createElement('div');
-            boba.className = 'boba';
-            const size = Math.random() * 40 + 15 + 'px';
-            boba.style.width = size;
-            boba.style.height = size;
-            boba.style.left = Math.random() * 100 + '%';
-            boba.style.animationDelay = Math.random() * 8 + 's';
-            boba.style.animationDuration = Math.random() * 5 + 6 + 's';
-            bobaBg.appendChild(boba);
+        // 生成背景飄浮元素 (珍珠 + 可愛圖示)
+        const floatingBg = document.getElementById('floating-bg');
+        const cuteIcons = ['🥭', '🍍', '🧋', '🍧', '🌸', '💖']; // 台南特色及可愛元素
+
+        for (let i = 0; i < 25; i++) { // 增加更多飄浮數量
+            if (Math.random() > 0.4) { // 60% 機率是珍珠
+                const boba = document.createElement('div');
+                boba.className = 'boba';
+                const size = Math.random() * 40 + 15 + 'px';
+                boba.style.width = size;
+                boba.style.height = size;
+                boba.style.left = Math.random() * 100 + '%';
+                boba.style.animationDelay = Math.random() * 10 + 's';
+                boba.style.animationDuration = Math.random() * 5 + 7 + 's';
+                floatingBg.appendChild(boba);
+            } else { // 40% 機率是可愛圖示
+                const icon = document.createElement('div');
+                icon.className = 'cute-icon';
+                icon.innerText = cuteIcons[Math.floor(Math.random() * cuteIcons.length)];
+                icon.style.left = Math.random() * 100 + '%';
+                icon.style.animationDelay = Math.random() * 12 + 's';
+                icon.style.animationDuration = Math.random() * 6 + 9 + 's';
+                floatingBg.appendChild(icon);
+            }
         }
 
         const stores = [
@@ -203,4 +281,3 @@
     </script>
 </body>
 </html>
-
